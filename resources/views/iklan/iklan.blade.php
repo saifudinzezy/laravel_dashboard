@@ -40,8 +40,8 @@
                                 @php $no = 1 @endphp
                                 @foreach ($data as $d)
                                     <tr>
-                                        <td class="center" width="10%">{{$no++}}</td>
-                                        <td class="center" width="20%"><img width="50px" height="50px" src="{{asset('upload/image/'.$d->image)}}" alt="{{$d->judul}}"></td>
+                                        <td class="center" width="5%">{{$no++}}</td>
+                                        <td class="center" width="10%"><img width="50px" height="50px" src="{{asset('upload/image/'.$d->image)}}" alt="{{$d->judul}}"></td>
                                         <td class="center">{{$d->judul}}</td>
                                         <td width="15%" class="center">
                                             <a class="btn btn-warning btn-sm" href="/iklan/show/{{ $d->id }}"><span class="material-icons">create</span></a>

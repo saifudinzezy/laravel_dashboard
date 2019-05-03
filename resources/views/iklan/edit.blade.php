@@ -38,7 +38,7 @@
                         @endif
                         <br>
 
-                        <form class="col s12" method="POST" enctype="multipart/form-data" action="{{'/iklan/update/{{ $data->id'}}">
+                        <form class="col s12" method="POST" enctype="multipart/form-data" action="/iklan/update/{{ $data->id }}">
                             {{ csrf_field() }}
                             <div class="row">
                                 <div class="input-field col s6">

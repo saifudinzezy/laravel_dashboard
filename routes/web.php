@@ -43,3 +43,8 @@ Route::group(["prefix" => "iklan/"], function () {
     Route::get("show/{id}", "IklanController@show");
     Route::post("update/{id}", "IklanController@update");
 });
+
+//api
+Route::group(["prefix" => "api/"], function () {
+    Route::get("iklan", "ApiCotroller@iklan");
+});

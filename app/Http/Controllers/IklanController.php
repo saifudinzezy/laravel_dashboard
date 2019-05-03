@@ -74,6 +74,55 @@ class IklanController extends Controller
     }
 
     public function update(Request $request, $id){
-        dd($request->all());
+//        dd($request->all());
+        $image = $request->file('image');
+
+        if($image != '')
+        {
+            //jika tidak kosong
+            $request->validate([
+                'judul' => 'required',
+                'image' => 'required|file|image|mimes:jpeg,png,jpg|max:2048',
+            ]);
+
+            //menyimpan data file yang diupload ke variabel file
+            $file = $request->file('image');
+            $nama_file = time().".".$file->getClientOriginalExtension();
+
+            // isi dengan nama folder tempat kemana file diupload
+            $tujuan_upload = 'upload/image/';
+            $file->move($tujuan_upload, $nama_file);
+
+            $iklan = Iklan::find($id);
+            $gambar = $iklan->image;
+            File::delete('upload/image/'.$gambar);
+            $iklan->judul = $request->judul;
+            $iklan->image = $nama_file;
+            $iklan->save();
+
+            $user = Auth::user();
+            $data = Iklan::orderBy('id', 'DESC')->get();
+            return redirect(action('IklanController@iklan'))->with(['alert-success' => 'Data berhasil ditambahkan!',
+                'data' => $data, 'user' => $user, 'iklan' => 1]);
+        }
+        else
+        {
+            $iklan = Iklan::find($id);
+            //kosong
+            $request->validate([
+                'judul' => 'required',
+            ]);
+
+            $gambar = $iklan->image;
+            $iklan->judul = $request->judul;
+            $iklan->image = $gambar;
+
+            $iklan->save();
+
+            $user = Auth::user();
+            $data = Iklan::orderBy('id', 'DESC')->get();
+            return redirect(action('IklanController@iklan'))->with(['alert-success' => 'Data berhasil ditambahkan!',
+                'data' => $data, 'user' => $user, 'iklan' => 1]);
+        }
     }
 }
